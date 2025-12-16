@@ -11,13 +11,27 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final phone = TextEditingController();
   final password = TextEditingController();
-  String status = "";
+  bool loading = false;
 
-  void register() async {
-    final res = await ApiService.register(phone.text, password.text);
-    setState(() {
-      status = res.toString();
-    });
+  Future<void> register() async {
+    setState(() => loading = true);
+
+    final success = await ApiService.register(
+      phone.text.trim(),
+      password.text.trim(),
+    );
+
+    setState(() => loading = false);
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          success ? 'Registration successful' : 'Registration failed',
+        ),
+      ),
+    );
   }
 
   @override
@@ -28,18 +42,32 @@ class _AuthScreenState extends State<AuthScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Data Bundle Hub", style: TextStyle(fontSize: 26)),
+            const Text(
+              "Data Bundle Hub",
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 20),
-            TextField(controller: phone, decoration: const InputDecoration(labelText: "Phone")),
+
+            TextField(
+              controller: phone,
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(labelText: "Phone"),
+            ),
+
             TextField(
               controller: password,
               decoration: const InputDecoration(labelText: "Password"),
               obscureText: true,
             ),
+
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: register, child: const Text("REGISTER")),
-            const SizedBox(height: 10),
-            Text(status),
+
+            ElevatedButton(
+              onPressed: loading ? null : register,
+              child: loading
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : const Text("REGISTER"),
+            ),
           ],
         ),
       ),
