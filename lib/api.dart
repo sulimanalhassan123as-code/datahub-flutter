@@ -1,0 +1,20 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class ApiService {
+  static const String baseUrl =
+      'https://never-hide17-dt3m.onrender.com';
+
+  static Future<bool> register(String phone, String password) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/v1/register'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'phone': phone,
+        'password': password,
+      }),
+    );
+
+    return response.statusCode == 200;
+  }
+}
