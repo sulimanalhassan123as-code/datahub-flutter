@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../api.dart';
-import import '../home_screen.dart';
+import '../home_screen.dart';
+
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
@@ -25,13 +26,16 @@ class _AuthScreenState extends State<AuthScreen> {
 
     if (!mounted) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          success ? 'Registration successful' : 'Registration failed',
-        ),
-      ),
-    );
+    if (success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Registration failed")),
+      );
+    }
   }
 
   @override
