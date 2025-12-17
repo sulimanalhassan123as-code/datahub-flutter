@@ -14,7 +14,18 @@ class ApiService {
         'password': password,
       }),
     );
-
     return response.statusCode == 200;
+  }
+
+  static Future<Map<String, dynamic>> getBundles() async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/v1/bundles'),
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load bundles');
+    }
   }
 }
