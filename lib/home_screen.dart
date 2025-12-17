@@ -8,16 +8,21 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Data Bundle Hub")),
+      appBar: AppBar(
+        title: const Text("Data Bundle Hub"),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const BundlesScreen()),
+                  MaterialPageRoute(
+                    builder: (_) => const BundlesScreen(),
+                  ),
                 );
               },
               child: const Text("Buy Data Bundle"),
@@ -27,7 +32,9 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const WalletScreen()),
+                  MaterialPageRoute(
+                    builder: (_) => const WalletScreen(),
+                  ),
                 );
               },
               child: const Text("Wallet"),
