@@ -50,8 +50,8 @@ class _BundlesScreenState extends State<BundlesScreen> {
           }
 
           final data = snapshot.data!;
-          final mtn = data['mtn'] ?? [];
-          final telecel = data['telecel'] ?? [];
+          final mtnMap = Map<String, dynamic>.from(data['mtn']);
+final telecelMap = Map<String, dynamic>.from(data['telecel']);
 
           return ListView(
             padding: const EdgeInsets.all(16),
