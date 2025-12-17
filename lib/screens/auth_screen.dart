@@ -10,14 +10,14 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final phone = TextEditingController();
-  final password = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController password = TextEditingController();
   bool loading = false;
 
   Future<void> register() async {
     setState(() => loading = true);
 
-    final success = await ApiService.register(
+    final bool success = await ApiService.register(
       phone.text.trim(),
       password.text.trim(),
     );
@@ -29,11 +29,15 @@ class _AuthScreenState extends State<AuthScreen> {
     if (success) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
+        MaterialPageRoute(
+          builder: (_) => const HomeScreen(),
+        ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Registration failed")),
+        const SnackBar(
+          content: Text('Registration failed'),
+        ),
       );
     }
   }
@@ -47,30 +51,45 @@ class _AuthScreenState extends State<AuthScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "Data Bundle Hub",
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              'Data Bundle Hub',
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 20),
 
             TextField(
               controller: phone,
               keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(labelText: "Phone"),
+              decoration: const InputDecoration(
+                labelText: 'Phone',
+              ),
             ),
+
+            const SizedBox(height: 12),
 
             TextField(
               controller: password,
-              decoration: const InputDecoration(labelText: "Password"),
               obscureText: true,
+              decoration: const InputDecoration(
+                labelText: 'Password',
+              ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
 
-            ElevatedButton(
-              onPressed: loading ? null : register,
-              child: loading
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : const Text("REGISTER"),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                onPressed: loading ? null : register,
+                child: loading
+                    ? const CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : const Text('REGISTER'),
+              ),
             ),
           ],
         ),
