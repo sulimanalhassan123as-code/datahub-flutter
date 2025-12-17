@@ -28,26 +28,27 @@ class ApiService {
       throw Exception('Failed to load bundles');
     }
   }
-}
-static Future<String> buyBundle({
-  required String network,
-  required String bundleId,
-  required String phone,
-}) async {
-  final response = await http.post(
-    Uri.parse('$baseUrl/api/v1/buy-bundle'),
-    headers: {'Content-Type': 'application/json'},
-    body: jsonEncode({
-      'network': network,
-      'bundle_id': bundleId,
-      'phone': phone,
-    }),
-  );
 
-  if (response.statusCode == 200) {
-    return "Purchase successful";
-  } else {
-    final data = jsonDecode(response.body);
-    return data['detail'] ?? "Purchase failed";
+  static Future<String> buyBundle({
+    required String network,
+    required String bundleId,
+    required String phone,
+  }) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/v1/buy-bundle'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'network': network,
+        'bundle_id': bundleId,
+        'phone': phone,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return "Purchase successful";
+    } else {
+      final data = jsonDecode(response.body);
+      return data['detail'] ?? "Purchase failed";
+    }
   }
 }
