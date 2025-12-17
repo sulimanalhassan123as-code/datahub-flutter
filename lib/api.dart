@@ -14,41 +14,14 @@ class ApiService {
         'password': password,
       }),
     );
+
     return response.statusCode == 200;
   }
 
   static Future<Map<String, dynamic>> getBundles() async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/api/v1/bundles'),
-    );
+    final response =
+        await http.get(Uri.parse('$baseUrl/api/v1/bundles'));
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to load bundles');
-    }
-  }
-
-  static Future<String> buyBundle({
-    required String network,
-    required String bundleId,
-    required String phone,
-  }) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/api/v1/buy-bundle'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'network': network,
-        'bundle_id': bundleId,
-        'phone': phone,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      return "Purchase successful";
-    } else {
-      final data = jsonDecode(response.body);
-      return data['detail'] ?? "Purchase failed";
-    }
+    return jsonDecode(response.body);
   }
 }
