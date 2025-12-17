@@ -12,8 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'DataHub',
-      theme: ThemeData.dark(),
+      title: 'Data Bundle Hub',
       home: const AuthScreen(),
     );
   }
