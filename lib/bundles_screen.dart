@@ -61,14 +61,19 @@ final telecelMap = Map<String, dynamic>.from(data['telecel']);
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
 
-              ...mtn.map<Widget>((b) => ListTile(
-                    title: Text(b['name']),
-                    trailing: Text("GHS ${b['price']}"),
-                    onTap: () => buy(
-                      network: "mtn",
-                      bundleId: b['id'],
-                    ),
-                  )),
+              ...mtnMap.entries.map<Widget>((entry) {
+  final id = entry.key;
+  final bundle = entry.value;
+
+  return ListTile(
+    title: Text("MTN ${bundle['size']}"),
+    trailing: Text("GHS ${bundle['price']}"),
+    onTap: () => buy(
+      network: "mtn",
+      bundleId: id,
+    ),
+  );
+}),
 
               const SizedBox(height: 20),
 
